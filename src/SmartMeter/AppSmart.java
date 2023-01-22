@@ -1,8 +1,6 @@
 package SmartMeter;
 
-import SmartMeter.consumer.CountEventsListener;
-import SmartMeter.consumer.SmartMeterListener;
-import SmartMeter.consumer.SumEventsListener;
+import SmartMeter.consumer.*;
 import SmartMeter.event.SmartMeterEvent;
 import SmartMeter.producer.SmartMeterProducer1;
 import SmartMeter.util.EPLQueries;
@@ -33,7 +31,7 @@ public class AppSmart {
 
         EPCompiled epCompiled;
         try {
-            epCompiled = compiler.compile(EPLQueries.countEvents(), argse);
+            epCompiled = compiler.compile(EPLQueries.avgPotencia(), argse);
         }
         catch (EPCompileException ex) {
             // handle exception here
@@ -53,12 +51,14 @@ public class AppSmart {
             throw new RuntimeException(ex);
         }
 
-        EPStatement statement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "countEvents");
+        EPStatement statement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "avgPotencia");
 
         SmartMeterListener wls = new SmartMeterListener();
         CountEventsListener ce = new CountEventsListener();
         SumEventsListener se = new SumEventsListener();
-        statement.addListener(ce);
+        ReturnAllListener re = new ReturnAllListener();
+        AvgPotenciaListener ap = new AvgPotenciaListener();
+        statement.addListener(ap);
 
         SmartMeterProducer1 smartMeterProducer = new SmartMeterProducer1(runtime);
         System.out.println("Iniciando a produção de eventos...");

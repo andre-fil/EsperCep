@@ -28,7 +28,13 @@ public class EPLQueries {
     }
 
     public static String returnAtribute(){
-        return "@Name('returnAtt') select potencia from SmartMeterEvent";
+
+        return "@Name('returnAtt') select corrente from SmartMeterEvent";
+    }
+
+    public static String avgPotencia(){
+        //return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent where potencia > 0";
+        return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent#length_batch(100000) where potencia > 0";
     }
 
 
