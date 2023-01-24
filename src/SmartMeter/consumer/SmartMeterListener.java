@@ -16,7 +16,7 @@ import lombok.SneakyThrows;
 public class SmartMeterListener implements UpdateListener {
 
     private List<Object> matchEvents = Collections.synchronizedList(new LinkedList<Object>());
-
+//tensão = 230, frequencia 50
 
     @SneakyThrows
     @Override

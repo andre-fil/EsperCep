@@ -31,7 +31,7 @@ public class AppSmart {
 
         EPCompiled epCompiled;
         try {
-            epCompiled = compiler.compile(EPLQueries.avgPotencia(), argse);
+            epCompiled = compiler.compile(EPLQueries.select(), argse);
         }
         catch (EPCompileException ex) {
             // handle exception here
@@ -51,14 +51,14 @@ public class AppSmart {
             throw new RuntimeException(ex);
         }
 
-        EPStatement statement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "avgPotencia");
+        EPStatement statement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "Select");
 
-        SmartMeterListener wls = new SmartMeterListener();
+        SmartMeterListener sm = new SmartMeterListener();
         CountEventsListener ce = new CountEventsListener();
         SumEventsListener se = new SumEventsListener();
         ReturnAllListener re = new ReturnAllListener();
         AvgPotenciaListener ap = new AvgPotenciaListener();
-        statement.addListener(ap);
+        statement.addListener(sm);
 
         SmartMeterProducer1 smartMeterProducer = new SmartMeterProducer1(runtime);
         System.out.println("Iniciando a produção de eventos...");

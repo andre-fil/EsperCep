@@ -18,7 +18,7 @@ public class AvgPotenciaListener  implements UpdateListener {
     @Override
     public void update(EventBean[] newData, EventBean[] oldEvents, EPStatement statement, EPRuntime runtime) {
         double avgPot = (double) newData[0].get("media");
-        System.out.println(String.format("Média de consumo: %.2f km/h", avgPot));
+        System.out.println(String.format("Média de consumo: %.2f kw/h", avgPot));
     }
 
 

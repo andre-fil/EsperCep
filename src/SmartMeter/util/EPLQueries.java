@@ -1,20 +1,24 @@
 package SmartMeter.util;
 
+
 public class EPLQueries {
 
 
     public static String select() {
         //*** Retorna todos os registros
+        return "@Name('Select') select * from SmartMeterEvent";
+
+        //*** Verifica se uma rede está com queda ou alta variação de tensão
+        //return "@Name('Select') select * from SmartMeterEvent where( (voltagem < 207 or voltagem > 253) and voltagem > 0) and meter = 'BR02' ";
+
         //*** É possível aplicar filtros ou cláusulas where que retornam todos os parâmetros
-        //return "@Name('Select') select * from SmartMeterEvent";
-        return "@Name('Select') select * from SmartMeterEvent where meter='BR05' and frequencia > 51";
         //return "@Name('Select') select * from SmartMeterEvent where x_Timestamp = '2020-02-02 20:00:00'";
 
     }
 
     public static String countEvents(){
         //*** Retorna a quantidade de eventos que acontecem sob determinadas condições
-        return "@Name('countEvents') select count(*) as cout from SmartMeterEvent where meter = 'BR04' and frequencia > 51";
+        return "@Name('countEvents') select count(*) as cout from SmartMeterEvent where meter = 'BR02'";
 
     }
 
@@ -34,7 +38,8 @@ public class EPLQueries {
 
     public static String avgPotencia(){
         //return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent where potencia > 0";
-        return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent#length_batch(100000) where potencia > 0";
+
+        return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent#length_batch(10000) where meter = 'BR02'";
     }
 
 
