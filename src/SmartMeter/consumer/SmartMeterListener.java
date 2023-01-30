@@ -3,6 +3,7 @@ package SmartMeter.consumer;
 import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,12 +22,16 @@ public class SmartMeterListener implements UpdateListener {
     @SneakyThrows
     @Override
     public void update(EventBean[] newData, EventBean[] oldEvents, EPStatement statement, EPRuntime runtime) {
-        String date;
+        //String date;
         String ts = (String) newData[0].get("x_Timestamp");
-        SimpleDateFormat formato1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        date = formato2.format(formato1.parse(ts));
-        System.out.print(String.format("Timestamp: %s ", date));
+        //SimpleDateFormat formato1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        //date = formato2.format(formato1.parse(ts));
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dataFormatada;
+        dataFormatada = formato.parse(ts);
+        System.out.print(String.format("Timestamp: %s ", dataFormatada));
+        System.out.println(dataFormatada.getClass().getSimpleName());
         double potencias = (double )newData[0].get("potencia");
         System.out.printf(String.format ("Potência: %.2f ", potencias));
         double voltagem = (double )newData[0].get("voltagem");

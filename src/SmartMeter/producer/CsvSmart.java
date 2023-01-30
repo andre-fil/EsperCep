@@ -2,11 +2,14 @@ package SmartMeter.producer;
 
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CsvSmart {
 
     private String X_Timestamp;
+    private Date data;
     private double potencia;
     private double  voltagem;
     private double corrente;
@@ -63,11 +66,29 @@ public class CsvSmart {
         this.meter = meter;
     }
 
+    public void setData(String x_Timestamp){
+        String dado = x_Timestamp;
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        {
+            try {
+               this.data= formato.parse(dado);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    public Date getData(){
+        return data;
+    }
+
 
     @Override
     public String toString() {
         return "CsvSmart{" +
                 "X_Timestamp=" + X_Timestamp +
+                "data" + data +
                 ", potencia=" + potencia +
                 ", voltagem=" + voltagem +
                 ", corrente=" + corrente +
