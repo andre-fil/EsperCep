@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ public class SmartMeterProducer1 extends Thread{
     public void run() {
         Reader reader = null;
         try {
-            reader = Files.newBufferedReader(Paths.get("/home/barreto/Downloads/CEEW.csv"));
+            reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/CEEW.csv"));
             //reader = Files.newBufferedReader(Paths.get("/home/barreto/Área de Trabalho/CDPO/intellij-esper-examples/src/main/java/SmartMeter/producer/input.csv"));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -35,12 +36,32 @@ public class SmartMeterProducer1 extends Thread{
                 .build();
 
         List<CsvSmart> rotulos = csvToBean.parse();
-        Date dataHoraAtual = new Date();
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
-        String hora = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+        String location;
 
-        for (CsvSmart smartmeters : rotulos)
-            runtime.getEventService().sendEventBean(new SmartMeterEvent(smartmeters.getX_Timestamp(), smartmeters.getPotencia(), smartmeters.getVoltagem(), smartmeters.getCorrente(), smartmeters.getFrequencia(), smartmeters.getMeter()), "SmartMeterEvent");
+        for (CsvSmart smartmeters : rotulos) {
+            String data = smartmeters.getX_Timestamp();
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dataFormatada;
+
+            int num = Integer.parseInt(smartmeters.getMeter().substring(2));
+
+            if(num <= 17){
+                location = "Turu";
+            } else if (num <= 33) {
+                location = "Cohab";
+            } else{
+                location = "Angelim";
+            }
+
+            try {
+                dataFormatada = formato.parse(data);
+
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            runtime.getEventService().sendEventBean(new SmartMeterEvent(dataFormatada, smartmeters.getPotencia(), smartmeters.getVoltagem(), smartmeters.getCorrente(), smartmeters.getFrequencia(), smartmeters.getMeter(),location), "SmartMeterEvent");
+
+        }
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

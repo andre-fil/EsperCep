@@ -3,25 +3,28 @@ import java.util.Date;
 
 
 public class SmartMeterEvent {
-    public String X_Timestamp;
+    //public String X_Timestamp;
+    public Date data;
     public double potencia;
     public double voltagem;
     public double corrente;
     public double frequencia;
     public String meter;
 
-    public SmartMeterEvent(String X_Timestamp,double potencia, double voltagem, double corrente, double frequencia, String meter) {
-        this.X_Timestamp = X_Timestamp;
+    public String location;
+
+    public SmartMeterEvent(Date data,double potencia, double voltagem, double corrente, double frequencia, String meter, String location) {
+        this.data = data;
         this.potencia = potencia;
         this.voltagem = voltagem;
         this.corrente = corrente;
         this.frequencia = frequencia;
         this.meter = meter;
+        this.location = location;
     }
 
-    public String getX_Timestamp() {
-        X_Timestamp.toString();
-        return X_Timestamp;
+    public Date getData(){
+        return data;
     }
 
     public double getPotencia() {
@@ -42,5 +45,9 @@ public class SmartMeterEvent {
 
     public double getVoltagem() {
         return voltagem;
+    }
+
+    public String getLocation(){
+        return location;
     }
 }

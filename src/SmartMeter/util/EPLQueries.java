@@ -6,7 +6,14 @@ public class EPLQueries {
 
     public static String select() {
         //*** Retorna todos os registros
-        return "@Name('Select') select * from SmartMeterEvent where data = '2020-12'";
+        //return "@Name('Select') select * from SmartMeterEvent where location = 'Turu' and potencia > 0 ";
+
+        return "@Name('select') select * from pattern [every potencia = 0]";
+
+
+
+
+
 
         //*** Verifica se uma rede está com queda ou alta variação de tensão
        // return "@Name('Select') select * from SmartMeterEvent where( (voltagem < 207 or voltagem > 253) and voltagem > 0) and meter = 'BR02' ";

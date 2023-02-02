@@ -23,15 +23,15 @@ public class SmartMeterListener implements UpdateListener {
     @Override
     public void update(EventBean[] newData, EventBean[] oldEvents, EPStatement statement, EPRuntime runtime) {
         //String date;
-        String ts = (String) newData[0].get("x_Timestamp");
+        //String ts = (String) newData[0].get("x_Timestamp");
         //SimpleDateFormat formato1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         //date = formato2.format(formato1.parse(ts));
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date dataFormatada;
-        dataFormatada = formato.parse(ts);
-        System.out.print(String.format("Timestamp: %s ", dataFormatada));
-        System.out.println(dataFormatada.getClass().getSimpleName());
+        //SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //Date dataFormatada;
+        //ataFormatada = formato.parse(ts);
+        Date data = (Date) newData[0].get("data");
+        System.out.print(String.format("Timestamp: %s ", data));
         double potencias = (double )newData[0].get("potencia");
         System.out.printf(String.format ("Potência: %.2f ", potencias));
         double voltagem = (double )newData[0].get("voltagem");
@@ -42,6 +42,8 @@ public class SmartMeterListener implements UpdateListener {
         System.out.printf(String.format("Frequência: %.2f ", frequencias));
         String meters = (String) newData[0].get("meter");
         System.out.println(String.format("Medidor: %s ", meters));
+        String location = (String) newData[0].get("location");
+        System.out.println(String.format("Localização: %s ", location));
 
     }
 

@@ -17,8 +17,10 @@ public class CsvSmart {
     private String meter;
 
 
+
+
     public double getPotencia() {
-        return potencia;
+        return potencia * 1000;
     }
 
     public String getX_Timestamp() {
