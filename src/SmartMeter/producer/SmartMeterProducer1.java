@@ -25,8 +25,8 @@ public class SmartMeterProducer1 extends Thread{
     public void run() {
         Reader reader = null;
         try {
-            reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/CEEW.csv"));
-            //reader = Files.newBufferedReader(Paths.get("/home/barreto/Área de Trabalho/CDPO/intellij-esper-examples/src/main/java/SmartMeter/producer/input.csv"));
+            //reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/CEEW.csv"));
+            reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/Esper-cep/src/SmartMeter/producer/input.csv"));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -41,17 +41,9 @@ public class SmartMeterProducer1 extends Thread{
         for (CsvSmart smartmeters : rotulos) {
             String data = smartmeters.getX_Timestamp();
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat formato2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             Date dataFormatada;
 
-            int num = Integer.parseInt(smartmeters.getMeter().substring(2));
-
-            if(num <= 17){
-                location = "Turu";
-            } else if (num <= 33) {
-                location = "Cohab";
-            } else{
-                location = "Angelim";
-            }
 
             try {
                 dataFormatada = formato.parse(data);
@@ -59,7 +51,7 @@ public class SmartMeterProducer1 extends Thread{
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-            runtime.getEventService().sendEventBean(new SmartMeterEvent(dataFormatada, smartmeters.getPotencia(), smartmeters.getVoltagem(), smartmeters.getCorrente(), smartmeters.getFrequencia(), smartmeters.getMeter(),location), "SmartMeterEvent");
+            runtime.getEventService().sendEventBean(new SmartMeterEvent(dataFormatada, smartmeters.getPotencia(), smartmeters.getVoltagem(), smartmeters.getCorrente(), smartmeters.getFrequencia(), smartmeters.getMeter()), "SmartMeterEvent");
 
         }
         try {

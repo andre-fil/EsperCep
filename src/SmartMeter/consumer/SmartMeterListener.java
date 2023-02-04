@@ -45,6 +45,7 @@ public class SmartMeterListener implements UpdateListener {
         String location = (String) newData[0].get("location");
         System.out.println(String.format("Localização: %s ", location));
 
+
     }
 
 

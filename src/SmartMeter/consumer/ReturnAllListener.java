@@ -28,6 +28,8 @@ public void update(EventBean[] newData, EventBean[] oldEvents, EPStatement state
                 System.out.println(String.format("Corrente: %.2f", corrente));
                 //String meter = (String) newData[0].get("meter");
                 //System.out.println(String.format("Medidor: %.2f", meter));
+                //String location = (String) newData[0].get("location");
+                //System.out.println(String.format("Localização: %s ", location));
         }
 
 

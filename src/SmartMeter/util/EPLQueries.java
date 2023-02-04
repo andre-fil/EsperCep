@@ -8,9 +8,7 @@ public class EPLQueries {
         //*** Retorna todos os registros
         //return "@Name('Select') select * from SmartMeterEvent where location = 'Turu' and potencia > 0 ";
 
-        return "@Name('select') select * from pattern [every potencia = 0]";
-
-
+        return "@Name('Select') select * from SmartMeterEvent where location = 'Turu'";
 
 
 
@@ -23,9 +21,15 @@ public class EPLQueries {
 
     }
 
+
     public static String countEvents(){
         //*** Retorna a quantidade de eventos que acontecem sob determinadas condições
-        return "@Name('countEvents') select count(*) as cout from SmartMeterEvent where meter = 'BR02'";
+
+        //return "@Name('countEvents') select count(*) as cout from SmartMeterEvent where meter = 'BR02'";
+
+        return "@Name('Select') insert into potenciaZero "
+                + "select * " +
+                "from SmartMeterEvent(potencia = 2000)";
 
     }
 
@@ -40,7 +44,12 @@ public class EPLQueries {
 
     public static String returnAtribute(){
 
-        return "@Name('returnAtt') select corrente from SmartMeterEvent";
+        //return "@Name('returnAtt') select corrente from SmartMeterEvent";
+        //return "@Name('select') select * from pattern [every erro = SmartMeterEvent(potencia > 0)]";
+
+        return "@Name('returnAtt') select maxby(potencia) from SmartMeterEvent";
+
+
     }
 
     public static String avgPotencia(){

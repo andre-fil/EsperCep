@@ -13,14 +13,28 @@ public class SmartMeterEvent {
 
     public String location;
 
-    public SmartMeterEvent(Date data,double potencia, double voltagem, double corrente, double frequencia, String meter, String location) {
+    public SmartMeterEvent(Date data,double potencia, double voltagem, double corrente, double frequencia, String meter) {
         this.data = data;
         this.potencia = potencia;
         this.voltagem = voltagem;
         this.corrente = corrente;
         this.frequencia = frequencia;
         this.meter = meter;
-        this.location = location;
+        this.setLocation();
+    }
+
+    public void setLocation() {
+        int num = Integer.parseInt(this.getMeter().substring(2));
+
+        if(num <= 17){
+            this.location = "Turu";
+        } else if (num <= 34) {
+            this.location = "Cohab";
+        } else{
+            this.location = "Angelim";
+        }
+
+
     }
 
     public Date getData(){
