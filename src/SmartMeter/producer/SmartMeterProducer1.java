@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SmartMeterProducer1 extends Thread{
         EPRuntime runtime;
@@ -39,15 +40,14 @@ public class SmartMeterProducer1 extends Thread{
         String location;
 
         for (CsvSmart smartmeters : rotulos) {
+            String date;
             String data = smartmeters.getX_Timestamp();
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            SimpleDateFormat formato2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            //SimpleDateFormat formato2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             Date dataFormatada;
-
-
+            //Date d2;
             try {
                 dataFormatada = formato.parse(data);
-
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }

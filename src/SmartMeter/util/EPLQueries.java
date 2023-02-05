@@ -1,5 +1,22 @@
 package SmartMeter.util;
 
+/*
+
+{
+			"name": "PowerLectureFwd",
+			"description": "Potência lidas pelo bloco Lecture",
+			"qos": "AT_MOST_ONCE",
+			"level": "FOG",
+			"target": "CLOUD",
+			"tagFilter": "block:lecture",
+			"definition": "select * from Power",
+			"inputEventTypes": ["PowerFwd"],
+			"attrs": {
+				"power": "double"
+			}
+		}
+		**/
+
 
 public class EPLQueries {
 
@@ -8,7 +25,7 @@ public class EPLQueries {
         //*** Retorna todos os registros
         //return "@Name('Select') select * from SmartMeterEvent where location = 'Turu' and potencia > 0 ";
 
-        return "@Name('Select') select * from SmartMeterEvent where location = 'Turu'";
+        return "@Name('Select') select * from SmartMeterEvent where voltagem > 250";
 
 
 
