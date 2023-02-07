@@ -3,16 +3,16 @@ package SmartMeter.util;
 /*
 
 {
-			"name": "PowerLectureFwd",
-			"description": "Potência lidas pelo bloco Lecture",
+			"name": "lackOfEnergy",
+			"description": "Verificação de queda de energia por falha interna",
 			"qos": "AT_MOST_ONCE",
-			"level": "FOG",
-			"target": "CLOUD",
-			"tagFilter": "block:lecture",
-			"definition": "select * from Power",
-			"inputEventTypes": ["PowerFwd"],
+			"level": "EDGE",
+			"target": "EDGE",
+			"tagFilter": "",
+			"definition": "select * from SmartMeterEvent where (potencia = 0) and (voltagem > 0) and (meter = 'BR02')",
+			"inputEventTypes": ["SmartMeterEvents"],
 			"attrs": {
-				"power": "double"
+
 			}
 		}
 		**/
@@ -20,12 +20,57 @@ package SmartMeter.util;
 
 public class EPLQueries {
 
+    //EDGE --> casa a casa
+    public static String lackOfEnergy() {
+        //retorna as casas que estão .
+        return "@Name('lackOfEnergy') select * from SmartMeterEvent where (potencia = 0) and (voltagem > 0) and (meter = 'BR02')";
+
+        /*
+        return "@Name('lackOfEnergy') create window lackOfEnergy insert into lackOfEnergy" +
+                " select *" +
+                " from SmartMeterEvent where (potencia = 0) and (voltagem > 0) and (meter = 'BR02')";
+
+                return "@Name('lackOfEnergy') select * from pattern [SmartMeterEvent(potencia = 0)]";
+*/
+    }
+
+    public static String noEnergy(){
+        //Retorna quando a casa está sem energia --> sem transmissão da concessionária.
+
+        return "@Name('noEnergy') select * from SmartMeterEvent(potencia = 0 and voltagem = 0 and corrente = 0 and meter = 'BR02')";
+
+    }
+
+    public static String voltageDrop(){
+        //Verifica quando há queda de tensão superior a 4% (NBR:5410)
+        return "@Name('voltageDrop') select * from SmartMeterEvent(voltagem < 230  - (230 * 0.05)  and meter = 'BR05')";
+    }
+
+    public  static String checkOverload(){
+        return "create context dangerOverload" +
+                "@Name('checkOverload') context dangerOverload select * from where( (voltagem < 207 or voltagem > 253) and voltagem > 0) and meter = 'BR02'";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static String select() {
         //*** Retorna todos os registros
         //return "@Name('Select') select * from SmartMeterEvent where location = 'Turu' and potencia > 0 ";
 
-        return "@Name('Select') select * from SmartMeterEvent where voltagem > 250";
+        return "@Name('Select') select * from SmartMeterEvent";
 
 
 
@@ -64,7 +109,8 @@ public class EPLQueries {
         //return "@Name('returnAtt') select corrente from SmartMeterEvent";
         //return "@Name('select') select * from pattern [every erro = SmartMeterEvent(potencia > 0)]";
 
-        return "@Name('returnAtt') select maxby(potencia) from SmartMeterEvent";
+        //return "@Name('returnAtt') select * from SmartMeterEvent";
+        return "@Name('returnAtt') select * from pattern [SmartMeterEvent(potencia = 0)]";
 
 
     }
@@ -75,10 +121,7 @@ public class EPLQueries {
         return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent#length_batch(10000) where meter = 'BR02'";
     }
 
-    public  static String checkOverload(){
-        return "create context dangerOverload" +
-                "@Name('checkOverload') context dangerOverload select * from where( (voltagem < 207 or voltagem > 253) and voltagem > 0) and meter = 'BR02'";
-    }
+
 
 
 }

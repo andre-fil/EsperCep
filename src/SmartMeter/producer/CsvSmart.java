@@ -20,7 +20,7 @@ public class CsvSmart {
 
 
     public double getPotencia() {
-        return potencia * 1000;
+        return potencia;
     }
 
     public String getX_Timestamp() {

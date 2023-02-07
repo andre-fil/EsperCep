@@ -30,8 +30,10 @@ public class AppSmart {
         CompilerArguments argse = new CompilerArguments(configuration);
 
         EPCompiled epCompiled;
+        EPCompiled epCompiled2;
         try {
             epCompiled = compiler.compile(EPLQueries.select(), argse);
+            //epCompiled2 = compiler.compile(EPLQueries.returnAtribute(), argse);
         }
         catch (EPCompileException ex) {
             // handle exception here
@@ -42,8 +44,10 @@ public class AppSmart {
         EPRuntime runtime = EPRuntimeProvider.getDefaultRuntime(configuration);
 
         EPDeployment deployment;
+       // EPDeployment deployment2;
         try {
             deployment = runtime.getDeploymentService().deploy(epCompiled);
+           // deployment2 = runtime.getDeploymentService().deploy(epCompiled2);
         }
         catch (EPDeployException ex) {
             // handle exception here
@@ -52,6 +56,8 @@ public class AppSmart {
         }
 
         EPStatement statement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "Select");
+        //EPStatement statement2 = runtime.getDeploymentService().getStatement(deployment2.getDeploymentId(), "returnAtt");
+
 
         SmartMeterListener sm = new SmartMeterListener();
         CountEventsListener ce = new CountEventsListener();
@@ -59,6 +65,7 @@ public class AppSmart {
         ReturnAllListener re = new ReturnAllListener();
         AvgPotenciaListener ap = new AvgPotenciaListener();
         statement.addListener(sm);
+        //statement2.addListener(re);
 
         SmartMeterProducer1 smartMeterProducer = new SmartMeterProducer1(runtime);
         System.out.println("Iniciando a produção de eventos...");

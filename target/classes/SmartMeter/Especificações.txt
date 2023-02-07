@@ -1,0 +1,63 @@
+//sobrecarga --> NT002
+//potencia zerada, mas com tensão = concessionária tá fornecendo energia mas não tem consumo na casa ( disjuntor desligado*) ) consumo zero)
+//tudo zerado --> Sem energia chegando na casa
+
+
+https://www.mordorintelligence.com/pt/industry-reports/india-hvdc-transmission-systems-market-industry
+A partir de 2020, mais de 58% das linhas de transmissão do país têm tensão nominal acima de 400 kV,
+enquanto 42% eram de 220 kV.
+
+ANEXO VIII DA RESOLUÇÃO NORMATIVA Nº 956, DE 7 DE DEZEMBRO 2021
+PROCEDIMENTOS DE DISTRIBUIÇÃO DE ENERGIA ELÉTRICA NO SISTEMA ELÉTRICO NACIONAL –
+PRODIST
+MÓDULO 8 – QUALIDADE DO FORNECIMENTO DE ENERGIA ELÉTRICA
+    http://www.jrubens.eng.br/download/Modulo8.pdf
+
+
+
+ 19. Para cada tensão de referência, as leituras a ela associadas classificam-se em três categorias:
+ adequadas, precárias ou críticas, baseando-se no afastamento do valor da tensão de leitura em relação à
+ de referência.
+
+
+
+22.
+ a) a tensão a ser contratada nos pontos de conexão pelos usuários atendidos  deve situar-se entre 95% e 105% da tensão
+  nominal de operação do sistema no ponto de conexão e, ainda, coincidir com a tensão nominal de um dos terminais de derivação
+ previamente exigido ou recomendado para o transformador da unidade consumidora;
+
+
+
+
+ Variação de frequência
+ 65. O sistema de distribuição e as instalações de geração a ele conectadas devem, em condições normais
+ de operação e em regime permanente, operar dentro dos limites de frequência situados entre 59,9 Hz e
+ 60,1 Hz.
+ 66. Quando da ocorrência de distúrbios no sistema de distribuição, as instalações de geração devem
+ garantir que a frequência retorne, no intervalo de tempo de 30 segundos após a transgressão, para a faixa
+ de 59,5 Hz a 60,5 Hz, para permitir a recuperação do equilíbrio carga-geração.
+ 67. Havendo necessidade de corte de geração ou de carga para permitir a recuperação do equilíbrio cargageração, durante os distúrbios no sistema de distribuição, a frequência:
+ não pode exceder 66 Hz ou ser inferior a 56,5 Hz em condições extremas;
+ pode permanecer acima de 62 Hz por no máximo 30 segundos e acima de 63,5 Hz por no máximo 10
+ segundos; e
+ pode permanecer abaixo de 58,5 Hz por no máximo 10 segundos e abaixo de 57,5 Hz por no máximo 5
+ segundos.
+
+ o caso dos sistemas de medição com funcionalidades adicionais de que trata o item 16.2 da Seção
+ 5.1 do Módulo 5 do PRODIST, considera-se que há Interrupção Momentânea de Tensão ou Interrupção
+ Temporária de Tensão sempre que a tensão de fornecimento for igual ou inferior a 70% da tensão
+ nominal.
+
+ Para gerar os indicadores de distorções harmônicas, flutuação de tensão e desequilíbrio de tensão
+ deve-se considerar o registro de 1.008 leituras válidas obtidas em intervalos consecutivos (período de
+ agregação) de 10 minutos cada, salvo as que eventualmente sejam expurgadas conforme item 86.
+
+
+ http://www.barreto.eng.br/blog/index.php/2016/12/09/queda-de-tensao/#:~:text=1)%20A%20Resolu%C3%A7%C3%A3o%20n%C2%BA%20505,de%20220%2F380V%2C%20trif%C3%A1sico.
+ De forma resumida, a NBR 5410:2004 apresenta no item 6.2.7 os seguintes requisitos referentes à queda de tensão nas instalações elétricas de baixa tensão:
+
+ A queda de tensão em qualquer ponto de utilização, não deve ser superior a:
+ 1) 7% a partir dos terminais secundários do transformador MT/BT, quando instalados na propriedade do consumidor ou quando esses terminais forem o ponto de entrega;
+ 2) 7% a partir dos terminais de saída do gerador;
+ 3) 5% a partir do ponto de entrega, nos fornecimentos em tensão secundária de distribuição (BT).
+ 4) Em nenhum caso a queda de tensão nos circuitos terminais pode ser superior a 4%.

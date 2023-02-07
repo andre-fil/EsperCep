@@ -26,8 +26,8 @@ public class SmartMeterProducer1 extends Thread{
     public void run() {
         Reader reader = null;
         try {
-            //reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/CEEW.csv"));
-            reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/Esper-cep/src/SmartMeter/producer/input.csv"));
+           // reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/CEEW.csv"));
+           reader = Files.newBufferedReader(Paths.get("/home/barreto/IdeaProjects/Esper-cep/src/SmartMeter/producer/input.csv"));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -37,7 +37,6 @@ public class SmartMeterProducer1 extends Thread{
                 .build();
 
         List<CsvSmart> rotulos = csvToBean.parse();
-        String location;
 
         for (CsvSmart smartmeters : rotulos) {
             String date;
