@@ -61,3 +61,7 @@ MÓDULO 8 – QUALIDADE DO FORNECIMENTO DE ENERGIA ELÉTRICA
  2) 7% a partir dos terminais de saída do gerador;
  3) 5% a partir do ponto de entrega, nos fornecimentos em tensão secundária de distribuição (BT).
  4) Em nenhum caso a queda de tensão nos circuitos terminais pode ser superior a 4%.
+
+
+-----------
+https://abracopel.org/blog/sobrecarga-de-energia-pode-causar-incendio/#:~:text=A%20sobrecarga%20el%C3%A9trica%20ocorre%20quando,instala%C3%A7%C3%A3o%20el%C3%A9trica%20e%20o%20usu%C3%A1rio.

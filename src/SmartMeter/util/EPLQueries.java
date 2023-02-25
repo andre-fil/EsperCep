@@ -68,18 +68,16 @@ public class EPLQueries {
 
     public static String select() {
         //*** Retorna todos os registros
-        //return "@Name('Select') select * from SmartMeterEvent where location = 'Turu' and potencia > 0 ";
 
-        return "@Name('Select') select * from SmartMeterEvent";
+        //return "@Name('Select')create window Test Event" + " insert into TestEvent select * from SmartMeterEvent";
+        //return "@Name('Select') select smart.* from pattern [every smart=SmartMeterEvent(potencia = 0) -> smart=SmartMeterEvent(potencia >0)]";
+        //return "@Name('Select') select * from SmartMeterEvent output last every 5 events";
+        return"@Name('Select') insert  into TestEvent select * from SmartMeterEvent(meter='BR02')";
+        //return "@Name('Select')select *,avg(corrente) from SmartMeterEvent(corrente > avg(corrente))";
+    }
 
-
-
-
-        //*** Verifica se uma rede está com queda ou alta variação de tensão
-       // return "@Name('Select') select * from SmartMeterEvent where( (voltagem < 207 or voltagem > 253) and voltagem > 0) and meter = 'BR02' ";
-
-        //*** É possível aplicar filtros ou cláusulas where que retornam todos os parâmetros
-        //return "@Name('Select') select * from SmartMeterEvent where x_Timestamp = '2020-02-02 20:00:00'";
+    public static String TestEvent(){
+        return "@Name('TestEvent') select * from TestEvent";
 
     }
 
@@ -118,7 +116,7 @@ public class EPLQueries {
     public static String avgPotencia(){
         //return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent where potencia > 0";
 
-        return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent#length_batch(10000) where meter = 'BR02'";
+        return "@Name('avgCorrente') select avg(corrente) as media from SmartMeterEvent where meter = 'BR02'";
     }
 
 
