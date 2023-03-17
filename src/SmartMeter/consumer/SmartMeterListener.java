@@ -22,8 +22,15 @@ public class SmartMeterListener implements UpdateListener {
     @SneakyThrows
     @Override
     public void update(EventBean[] newData, EventBean[] oldEvents, EPStatement statement, EPRuntime runtime) {
-        Date data = (Date) newData[0].get("data");
-        System.out.print(String.format("Timestamp: %s ", data));
+        int hora = (int) newData[0].get("hora");
+        int minuto = (int) newData[0].get("minutos");
+        int dia = (int) newData[0].get("dia");
+        int mes = (int) newData[0].get("mes");
+        int ano = (int) newData[0].get("ano");
+        if (hora < 10)
+            System.out.println("Timestamp: " + dia + "/" + mes + "/" + ano +" - " +"0"+ hora + ":" + minuto + ":" + 0 +0);
+        else
+            System.out.println("Timestamp: " + dia + "/" + mes + "/" + ano +" - " + hora + ":" + minuto + ":" + 0 +0);
         double potencias = (double )newData[0].get("potencia");
         System.out.printf(String.format ("Potência: %.2f ", potencias));
         double voltagem = (double )newData[0].get("voltagem");
@@ -36,7 +43,6 @@ public class SmartMeterListener implements UpdateListener {
         System.out.println(String.format("Medidor: %s ", meters));
         String location = (String) newData[0].get("location");
         System.out.println(String.format("Localização: %s ", location));
-
 
     }
 

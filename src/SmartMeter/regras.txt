@@ -1,10 +1,10 @@
 
 0 - EPA pra calcular a média da corrente
-    *-> select avg(corrente) as media from SmartMeterEvent
+    *-> select avg(corrente) as media from SmartMeterEvent#length_batch(480)
 
 1 - EPA pra identificar aumento continuo no valor da corrente. {O aumento continuo no valor da corrente pode significar uma eventual sobrecarga}
      ratificar com dados de diminuição de tensão
-         *-> select * from pattern [every SmartMeterEvent -> SmartMeterEvent(potencia > 0)]
+         *-> select smart.* from pattern [every smart=SmartMeterEvent(potencia > 0 ) -> smart=SmartMeterEvent(potencia > 0)#length_batch(480)]
 
 2 - EPA pra identificar queda significativa de tensão --> {A norma NBR 5410 – Instalações Elétricas de Baixa Tensão
  define que a queda de tensão máxima permitida em um circuito terminal é de 4%}.
@@ -13,7 +13,19 @@
 3 - EPA pra avisar se há sobrecarga na rede { utilizando eventos das EPAs 1 e 2}
 
 
+
+
+--------------------------------------
 x - EPA pra identificar falta de energia em casa através de padrões - { Se uma casa passar mais de 10 minutos com potencia
  zerada, mas com tensão chegando, significa que a casa está recebendo energia da concessionária,
   mas que não há consumo interno}.
-        *-> select * from SmartMeterEvent where( (voltagem < 207 or voltagem > 253) and voltagem > 0);
+        *-> select * from SmartMeterEvent(potencia = 0 and voltagem > 0);
+
+-----------------------------------------------------
+y - EPA para identificar provável curto-circuito
+    *-> select * from SmartMeterEvent(corrente > (avg(corrente) * 2) and voltagem < 230  - (230 * 0.05)
+
+
+
+----------------------------
+comparar resultados do jupiter notebook com o sistema ( consumo médio, mes a mes , etc)

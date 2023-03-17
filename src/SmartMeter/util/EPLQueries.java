@@ -20,6 +20,48 @@ package SmartMeter.util;
 
 public class EPLQueries {
 
+
+
+    public static String ConsumoEnergia(){
+        return "@Name('consumo') select sum(potencia) as consumo,meter,location from PotenciaEvent#length_batch(12000) where meter = 'BR02'";
+    }
+
+    public static String subtensao(){
+        //Verifica quando há queda de tensão superior a 4% (NBR:5410)
+        return "@Name('subtensao') select * from SmartMeterEvent(voltagem < 230  - (230 * 0.05)  and meter = 'BR05')";
+    }
+
+    public static String avgCorrente(){
+
+        return "@Name('avgCorrente') select avg(corrente) as media from SmartMeterEvent#length_batch(480) where meter = 'BR02' and corrente > 0";
+    }
+
+
+    public static String ConsumobyMeter(){
+        return "create context ConsumoMeter partition by meter from PotenciaProducer "
+                + "@Name('consumoMeters') context ConsumoMeter select sum(potencia) as consumo, meter, location from PotenciaEvent#length_batch(10) group by meter";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //EDGE --> casa a casa
     public static String lackOfEnergy() {
         //retorna as casas que estão .
@@ -41,10 +83,7 @@ public class EPLQueries {
 
     }
 
-    public static String voltageDrop(){
-        //Verifica quando há queda de tensão superior a 4% (NBR:5410)
-        return "@Name('voltageDrop') select * from SmartMeterEvent(voltagem < 230  - (230 * 0.05)  and meter = 'BR05')";
-    }
+
 
     public  static String checkOverload(){
         return "create context dangerOverload" +
@@ -52,28 +91,10 @@ public class EPLQueries {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static String select() {
-        //*** Retorna todos os registros
 
-        //return "@Name('Select')create window Test Event" + " insert into TestEvent select * from SmartMeterEvent";
-        //return "@Name('Select') select smart.* from pattern [every smart=SmartMeterEvent(potencia = 0) -> smart=SmartMeterEvent(potencia >0)]";
-        //return "@Name('Select') select * from SmartMeterEvent output last every 5 events";
-        return"@Name('Select') insert  into TestEvent select * from SmartMeterEvent(meter='BR02')";
-        //return "@Name('Select')select *,avg(corrente) from SmartMeterEvent(corrente > avg(corrente))";
+        return"@Name('Select') select * from SmartMeterEvent where mes = 6 and meter = 'BR02'";
+
     }
 
     public static String TestEvent(){
@@ -85,11 +106,7 @@ public class EPLQueries {
     public static String countEvents(){
         //*** Retorna a quantidade de eventos que acontecem sob determinadas condições
 
-        //return "@Name('countEvents') select count(*) as cout from SmartMeterEvent where meter = 'BR02'";
-
-        return "@Name('Select') insert into potenciaZero "
-                + "select * " +
-                "from SmartMeterEvent(potencia = 2000)";
+        return "@Name('countEvent') select count(*) as cout from SmartMeterEvent where meter = 'BR04'";
 
     }
 
@@ -113,14 +130,18 @@ public class EPLQueries {
 
     }
 
-    public static String avgPotencia(){
-        //return "@Name('avgPotencia') select avg(potencia) as media from SmartMeterEvent where potencia > 0";
 
-        return "@Name('avgCorrente') select avg(corrente) as media from SmartMeterEvent where meter = 'BR02'";
-    }
 
 
 
 
 }
-    
+
+
+//*** Retorna todos os registros
+
+//return "@Name('Select')create window Test Event" + " insert into TestEvent select * from SmartMeterEvent";
+//return "@Name('Select') select smart.* from pattern [every smart=SmartMeterEvent(potencia = 0) -> smart=SmartMeterEvent(potencia >0)]";
+//return "@Name('Select') select * from SmartMeterEvent output last every 5 events";
+//return "@Name('Select') @Audit select *,avg(corrente) from SmartMeterEvent(corrente > avg(corrente))";
+//return "@Name('Select') select * from SmartMeterEvent#time_batch(1 min)";
