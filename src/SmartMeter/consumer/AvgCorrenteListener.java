@@ -18,6 +18,11 @@ public class AvgCorrenteListener implements UpdateListener {
     @Override
     public void update(EventBean[] newData, EventBean[] oldEvents, EPStatement statement, EPRuntime runtime) {
         double avgCorrente = (double) newData[0].get("media");
+        int mes = (int) newData[0].get("mes");
+        int dia = (int) newData[0].get("dia");
+        String meters = (String) newData[0].get("meter");
+        System.out.printf(String.format("Medidor: %s ", meters));
+        System.out.printf(" Dia: " + dia + "/" + mes + " --> ");
         System.out.println(String.format("Média: %.2f A", avgCorrente));
     }
 

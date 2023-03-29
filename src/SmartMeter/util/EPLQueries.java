@@ -23,7 +23,7 @@ public class EPLQueries {
 
 
     public static String ConsumoEnergia(){
-        return "@Name('consumo') select sum(potencia) as consumo,meter,location from PotenciaEvent#length_batch(12000) where meter = 'BR02'";
+        return "@Name('consumo') select sum(potencia) as consumo, mes, ano, meter, location from SmartMeterEvent where mes = 2 and meter = 'BR02'";
     }
 
     public static String subtensao(){
@@ -31,15 +31,26 @@ public class EPLQueries {
         return "@Name('subtensao') select * from SmartMeterEvent(voltagem < 230  - (230 * 0.05)  and meter = 'BR05')";
     }
 
-    public static String avgCorrente(){
+    public static String avgCorrenteOrigin(){
+        return "@Name('media') select avg(corrente) as media from SmartMeterEvent#length(2) where meter = 'BR02' and corrente > 0";
+    }
 
-        return "@Name('avgCorrente') select avg(corrente) as media from SmartMeterEvent#length_batch(480) where meter = 'BR02' and corrente > 0";
+    public static String avgCorrente(){
+       /* return "@Name('media') select avg(corrente) as media from SmartMeterEvent#length(2) where meter = 'BR02' and corrente > 0"; */
+        return"create context AvgbyMeter partition by meter,mes from SmartMeterEvent;\n" +
+                "@Name('media')\n" +
+                "context AvgbyMeter select avg(corrente) as media, dia, mes, meter from SmartMeterEvent where  mes = 2 group by meter"
+                ;
     }
 
 
+
     public static String ConsumobyMeter(){
-        return "create context ConsumoMeter partition by meter from PotenciaProducer "
-                + "@Name('consumoMeters') context ConsumoMeter select sum(potencia) as consumo, meter, location from PotenciaEvent#length_batch(10) group by meter";
+        return "create context ConsumoMeter partition by meter,mes from SmartMeterEvent;\n" +
+                " @Name('consumo')\n" +
+                "context ConsumoMeter select sum(potencia) as consumo, mes, ano, meter, location\n" +
+                "from SmartMeterEvent \n" +
+                "group by meter ;";
     }
 
 
@@ -65,7 +76,7 @@ public class EPLQueries {
     //EDGE --> casa a casa
     public static String lackOfEnergy() {
         //retorna as casas que estão .
-        return "@Name('lackOfEnergy') select * from SmartMeterEvent where (potencia = 0) and (voltagem > 0) and (meter = 'BR02')";
+        return "@Name('lackOfEnergy') select * from SmartMeterEvent where (potencia = 0) and (voltagem > 0) and (meter = 'BR02') and ( mes = 1 and dia = 1)";
 
         /*
         return "@Name('lackOfEnergy') create window lackOfEnergy insert into lackOfEnergy" +
@@ -79,7 +90,7 @@ public class EPLQueries {
     public static String noEnergy(){
         //Retorna quando a casa está sem energia --> sem transmissão da concessionária.
 
-        return "@Name('noEnergy') select * from SmartMeterEvent(potencia = 0 and voltagem = 0 and corrente = 0 and meter = 'BR02')";
+        return "@Name('noEnergy') select * from SmartMeterEvent where (potencia = 0 and voltagem = 0 and corrente = 0 and meter = 'BR02') and ( mes = 1 and dia = 1)";
 
     }
 
@@ -93,7 +104,7 @@ public class EPLQueries {
 
     public static String select() {
 
-        return"@Name('Select') select * from SmartMeterEvent where mes = 6 and meter = 'BR02'";
+        return"@Name('Select') select * from SmartMeterEvent where mes = 12 and dia = 21 and meter = 'BR02'";
 
     }
 
@@ -130,6 +141,19 @@ public class EPLQueries {
 
     }
 
+    public static String padrao_sobrecarga(){
+        return "@Name('padrao') SELECT * FROM SmartMeterEvent\n" +
+                "MATCH_RECOGNIZE (\n" +
+                "  PARTITION BY meter\n" +
+                "  MEASURES\n" +
+                "    avg(potencia) as avgpotencia,\n" +
+                "    avg(corrente) as avgcorrente\n" +
+                "  PATTERN (overload)\n" +
+                "  DEFINE\n" +
+                "    overload as avgcorrente > 15 and avgpotencia > 5000\n" +
+                ")\n";
+    }
+
 
 
 
@@ -145,3 +169,15 @@ public class EPLQueries {
 //return "@Name('Select') select * from SmartMeterEvent output last every 5 events";
 //return "@Name('Select') @Audit select *,avg(corrente) from SmartMeterEvent(corrente > avg(corrente))";
 //return "@Name('Select') select * from SmartMeterEvent#time_batch(1 min)";
+
+
+/*MATCH_RECOGNIZE (
+      PARTITION BY location
+      ORDER BY hora, dia, mes
+      MEASURES
+         LAST(voltagem) AS last_voltagem,
+         LAST(corrente) AS last_corrente
+      PATTERN (abnormal_drop)
+      DEFINE
+         abnormal_drop AS last_voltagem < 100 AND last_corrente < 10
+   )```*/

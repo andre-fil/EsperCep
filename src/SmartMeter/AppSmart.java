@@ -1,6 +1,7 @@
 package SmartMeter;
 
 import SmartMeter.consumer.*;
+import SmartMeter.event.MeterEvent;
 import SmartMeter.event.SmartMeterEvent;
 import SmartMeter.event.PotenciaEvent;
 import SmartMeter.producer.PotenciaProducer;
@@ -28,14 +29,14 @@ public class AppSmart {
 
         Configuration configuration = new Configuration();
         configuration.getCommon().addEventType(SmartMeterEvent.class);
-        configuration.getCommon().addEventType(PotenciaEvent.class);
+        configuration.getCommon().addEventType(MeterEvent.class);
 
 
         CompilerArguments argse = new CompilerArguments(configuration);
 
         EPCompiled epCompiled;
         try {
-            epCompiled = compiler.compile(EPLQueries.select(), argse);
+            epCompiled = compiler.compile(EPLQueries.ConsumobyMeter(), argse);
         }
         catch (EPCompileException ex) {
             // handle exception here
@@ -67,7 +68,7 @@ public class AppSmart {
         }
 
 
-        EPStatement statement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "Select");
+        EPStatement statement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "consumo");
         //EPStatement statement2 = runtime.getDeploymentService().getStatement(deployment2.getDeploymentId(), "TestEvent");
 
 
@@ -77,8 +78,9 @@ public class AppSmart {
         ReturnAllListener re = new ReturnAllListener();
         AvgCorrenteListener ac = new AvgCorrenteListener();
         ConsumoEventsListener cl = new ConsumoEventsListener();
-        statement.addListener(sm);
-        //statement2.addListener(sm);
+        SobrecargaEventsListener sl = new SobrecargaEventsListener();
+        statement.addListener(cl);
+        //statement2.addListener(ac);
 
 
         SmartMeterProducer1 smartMeterProducer = new SmartMeterProducer1(runtime);
@@ -86,6 +88,7 @@ public class AppSmart {
         System.out.println("Iniciando a produção de eventos...");
         smartMeterProducer.start();
         //potenciaProducer.start();
+
 
 
     }

@@ -28,11 +28,11 @@ public class SmartMeterListener implements UpdateListener {
         int mes = (int) newData[0].get("mes");
         int ano = (int) newData[0].get("ano");
         if (hora < 10)
-            System.out.println("Timestamp: " + dia + "/" + mes + "/" + ano +" - " +"0"+ hora + ":" + minuto + ":" + 0 +0);
+            System.out.printf("Timestamp: " + dia + "/" + mes + "/" + ano +" - " +"0"+ hora + ":" + minuto + ":" + 0 +0);
         else
-            System.out.println("Timestamp: " + dia + "/" + mes + "/" + ano +" - " + hora + ":" + minuto + ":" + 0 +0);
+            System.out.printf("Timestamp: " + dia + "/" + mes + "/" + ano +" - " + hora + ":" + minuto + ":" + 0 +0);
         double potencias = (double )newData[0].get("potencia");
-        System.out.printf(String.format ("Potência: %.2f ", potencias));
+        System.out.printf(String.format (" Potência: %.2f ", potencias));
         double voltagem = (double )newData[0].get("voltagem");
         System.out.printf(String.format ("Voltagem: %.2f ", voltagem));
         double correntes = (double) newData[0].get("corrente");

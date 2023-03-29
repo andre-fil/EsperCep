@@ -19,8 +19,11 @@ public class ConsumoEventsListener implements UpdateListener {
     @SneakyThrows
     @Override
     public void update(EventBean[] newData, EventBean[] oldEvents, EPStatement statement, EPRuntime runtime) {
+        int mes = (int) newData[0].get("mes");
+        int ano = (int) newData[0].get("ano");
+        System.out.printf("Mês: " + mes + "/" + ano + " --> ");
     double consumo = (double) newData[0].get("consumo");
-    System.out.print(String.format("Consumo (kw): %.2f ", consumo));
+    System.out.print(String.format(" Consumo(kw): %.4f ", consumo));
     String meters = (String) newData[0].get("meter");
     System.out.println(String.format("Medidor: %s ", meters));
     String location = (String) newData[0].get("location");
